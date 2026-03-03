@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['userName'] = '';
 // 1) Если есть ошибка в сессии — забираем и сразу очищаем (flash message)
 $error = $_SESSION['error'] ?? '';
 unset($_SESSION['error']);
