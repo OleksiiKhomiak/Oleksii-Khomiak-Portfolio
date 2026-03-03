@@ -3,25 +3,15 @@ session_start();
 $_SESSION['userName'] = "UserName";
 ?>
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="home.css">
-    <title>Home</title>
-</head>
-<body>
-    <?php include 'header.php' ?>
-    <?php include 'footer.php' ?>
-  <!doctype html>
-<html lang="ru">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Online Portfolio</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../css/home.css" />
 </head>
 <body>
+ 
   <!-- Top Bar -->
   <header class="topbar">
     <div class="container topbar__inner">
@@ -48,8 +38,8 @@ $_SESSION['userName'] = "UserName";
         </p>
 
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#">Перейти в портфолио</a>
-          <a class="btn btn--secondary" href="#">Войти</a>
+          <a class="btn btn--primary" href="../portfolio.php">Перейти в портфолио</a>
+          <a class="btn btn--secondary" href="../register.php">Войти</a>
         </div>
 
         <div class="hero__meta">
