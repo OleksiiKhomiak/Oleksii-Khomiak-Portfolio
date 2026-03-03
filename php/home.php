@@ -22,7 +22,7 @@ $_SESSION['userName'] = "UserName";
 
       <nav class="topbar__nav" aria-label="Top navigation">
         <a class="navlink" href="#">Home</a>
-        <a class="navlink" href="#">Login</a>
+        <a class="navlink" href="register.php">Login</a>
       </nav>
     </div>
   </header>
@@ -31,15 +31,15 @@ $_SESSION['userName'] = "UserName";
     <!-- Hero -->
     <section class="hero">
       <div class="hero__content">
-        <h1 class="hero__title">Online Portfolio System</h1>
+        <h1 class="hero__title">My IT Portfolio</h1>
         <p class="hero__subtitle">
-          Структурируй доказательства по годам и категориям. Делись материалами выборочно — доступ задаётся
-          для каждого файла отдельно.
+          This section contains my educational projects, assignments, and professional achievements.
+             The materials are organised by year and category, reflecting my growth as an IT specialist.
         </p>
 
         <div class="hero__actions">
-          <a class="btn btn--primary" href="../portfolio.php">Перейти в портфолио</a>
-          <a class="btn btn--secondary" href="../register.php">Войти</a>
+          <a class="btn btn--primary" href="../portfolio.php">Register</a>
+          <a class="btn btn--secondary" href="../register.php">Login</a>
         </div>
 
         <div class="hero__meta">
@@ -71,45 +71,6 @@ $_SESSION['userName'] = "UserName";
       </aside>
     </section>
 
-    <!-- Search / Filters (visual only, можно подключить позже) -->
-    <section class="tools" aria-label="Portfolio tools">
-      <div class="tools__row">
-        <div class="field">
-          <label class="label" for="q">Поиск</label>
-          <input class="input" id="q" type="search" placeholder="Например: reflection, report, wireframe…" />
-        </div>
-
-        <div class="field">
-          <label class="label" for="year">Год</label>
-          <select class="select" id="year">
-            <option value="">Все</option>
-            <option>Year 1</option>
-            <option>Year 2</option>
-            <option>Year 3</option>
-            <option>Year 4</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label class="label" for="cat">Категория</label>
-          <select class="select" id="cat">
-            <option value="">Все</option>
-            <option>Web Development</option>
-            <option>Project Innovate</option>
-            <option>Software Quality</option>
-            <option>Projects</option>
-          </select>
-        </div>
-
-        <div class="field field--actions">
-          <span class="label label--ghost"> </span>
-          <button class="btn btn--primary btn--full" type="button">Применить</button>
-        </div>
-      </div>
-      <p class="hint">
-        Подсказка: для Visitor на реальном сайте показывай только доступные файлы. Админ видит всё.
-      </p>
-    </section>
 
     <!-- Portfolio Structure -->
     <section class="section">
@@ -211,35 +172,6 @@ $_SESSION['userName'] = "UserName";
           </div>
         </div>
       </article>
-    </section>
-
-    <!-- Info Cards -->
-    <section class="section">
-      <div class="section__head">
-        <h2 class="section__title">Key rules (MVP)</h2>
-        <p class="section__desc">Что важно реализовать в логике (когда подключишь PHP).</p>
-      </div>
-
-      <div class="grid grid--3">
-        <div class="infocard">
-          <h3 class="infocard__title">Two roles</h3>
-          <p class="infocard__text">
-            Administrator управляет категориями, файлами и доступами. Visitor только просматривает разрешённые файлы.
-          </p>
-        </div>
-        <div class="infocard">
-          <h3 class="infocard__title">Access per visitor</h3>
-          <p class="infocard__text">
-            Доступ назначается для каждого файла отдельно и зависит от конкретного пользователя, а не от роли.
-          </p>
-        </div>
-        <div class="infocard">
-          <h3 class="infocard__title">Browser view</h3>
-          <p class="infocard__text">
-            Просмотр файлов должен быть возможен прямо в приложении (например, PDF в iframe). Download — опционально.
-          </p>
-        </div>
-      </div>
     </section>
   </main>
 </body>
