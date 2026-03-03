@@ -10,6 +10,8 @@ $_SESSION['userName'] = "userName";
     <title>Login</title>
 </head>
 <body>
-    
+    <form action="login.php" enctype="multipart/form-data">
+        <input type="text" placeholder="enter your name">
+    </form>
 </body>
 </html>
