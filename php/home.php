@@ -75,8 +75,8 @@ $_SESSION['userName'] = "UserName";
     <!-- Portfolio Structure -->
     <section class="section">
       <div class="section__head">
-        <h2 class="section__title">Portfolio structure</h2>
-        <p class="section__desc">Пример организации материалов по годам, категориям и файлам.</p>
+        <h2 class="section__title">My Work & Projects</h2>
+        <p class="section__desc">Here you will find my academic and practical work, organised by year of study and subject area.</p>
       </div>
 
       <!-- Year 1 -->
