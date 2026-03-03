@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 // 1) Если есть ошибка в сессии — забираем и сразу очищаем (flash message)
 $error = $_SESSION['error'] ?? '';
 unset($_SESSION['error']);
@@ -20,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $password = filter_input(INPUT_POST, 'password');
 
     if (empty($name) || empty($email) || empty($password)) {
         $_SESSION['error'] = "All fields must be filled!";
@@ -49,10 +48,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         while($result = $stmt->fetch()){//We can again fetch every record one by one
             if($user_email == $email || $user_name == $name){
-                
+                $_SESSION['error'] = "The user with this email or username exist";
+                header("Location: register.php"); // или на home.php
+                exit;
             } //But this time we print by using the "nicely bound" variables instead of an array
         }
         $stmt->closeCursor();
+        if($dbHandler){
+        try{
+            $password = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $dbHandler->prepare("INSERT INTO `Users` (`user_name`, `user_email`, `user_password`) 
+                                        VALUES (:us, :em, :ps);"
+                                    );//Similar to line 19, but this time we add a variable that we are going to bind
+            $stmt->bindParam("us", $name, PDO::PARAM_STR);
+            $stmt->bindParam("em", $email, PDO::PARAM_STR);
+            $stmt->bindParam("ps", $password, PDO::PARAM_STR);//We bind the param "artistName" in the query to the varable $artistName in PHP. We also specify that this is a string
+            $stmt->execute(); 
+            $stmt->closeCursor();
+            header("Location: login.php"); // или на home.php
+            exit;
+        }catch(Exception $ex) {
+            printError($ex);
+        }
+    }
     }
     header("Location: register.php"); // или на home.php
     exit;
