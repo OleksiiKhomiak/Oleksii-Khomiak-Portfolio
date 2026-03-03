@@ -28,8 +28,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // ✅ Тут если всё ок: сохранить в БД и т.д.
-    // $_SESSION['success'] = "Account created!";
+    if($dbHandler){
+        try{
+            $stmt = $dbHandler->prepare("SELECT *
+                                        FROM `Users`"
+                                    );
+            $stmt->execute(); //Note: We only execute the statement, the gathering of data is done in thee second segment           
+        }catch(Exception $ex) {
+            printError($ex);
+        }
+    }
+
+    if(isset($stmt)){
+        $stmt->bindColumn("user_name", $user_name); //We bind the column "id" to the variable $id
+        $stmt->bindColumn("user_email", $user_email); //We bind the column "name" to the variable $name
+        //We can also bind by column number. Note, this starts counting at 1
+        //$stmt->bindColumn(1, $id);
+        //$stmt->bindColumn(2, $name);
+        $stmt->execute();
+        
+        while($result = $stmt->fetch()){//We can again fetch every record one by one
+            if($user_email == $email || $user_name == $name){
+                
+            } //But this time we print by using the "nicely bound" variables instead of an array
+        }
+        $stmt->closeCursor();
+    }
     header("Location: register.php"); // или на home.php
     exit;
 }
