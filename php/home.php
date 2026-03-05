@@ -1,213 +1,314 @@
-<?php 
+<?php
 session_start();
-$_SESSION['userName'] = "UserName";
+
+/*
+  Start session to access login data.
+  Session stores:
+  - userName
+  - role (admin / user)
+*/
 ?>
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Page title -->
   <title>Online Portfolio</title>
+
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="../css/home.css" />
 </head>
 <body>
- 
-  <!-- Top Bar -->
+
+  <!-- ===============================
+       TOP NAVIGATION BAR
+       =============================== -->
   <header class="topbar">
     <div class="container topbar__inner">
-      <a class="brand" href="#">
+
+      <!-- Logo / Brand -->
+      <a class="brand" href="home.php">
         <span class="brand__mark" aria-hidden="true"></span>
         <span class="brand__text">Portfolio</span>
       </a>
 
-      <nav class="topbar__nav" aria-label="Top navigation">
-      <a class="navlink" href="home.php">Home</a>
-      <a class="navlink" href="portfolio.php">Portfolio</a>
-      <a class="navlink" href="addFile.php">Upload File</a>
+      <!-- Navigation links -->
+      <nav class="topbar__nav">
+
+        <!-- Public pages -->
+        <a class="navlink" href="home.php">Home</a>
+        <a class="navlink" href="portfolio.php">Portfolio</a>
+
+        <!-- Admin-only link -->
+        <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+          <a class="navlink" href="addFile.php">Upload File</a>
+        <?php endif; ?>
+
+        <!-- If user is logged in show username -->
+        <?php if (!empty($_SESSION['userName'])): ?>
+
+          <div class="user-menu">
+
+            <!-- Username button -->
+            <button class="user-btn" id="userBtn">
+              <?= htmlspecialchars($_SESSION['userName']); ?>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div class="user-dropdown" id="userDropdown">
+              <a href="logout.php">Logout</a>
+            </div>
+
+          </div>
+
+        <?php else: ?>
+
+          <!-- If not logged in show login button -->
+          <a class="btn btn--primary" href="login.php">Login</a>
+
+        <?php endif; ?>
+
       </nav>
     </div>
   </header>
 
+  <!-- ===============================
+       MAIN PAGE CONTENT
+       =============================== -->
   <main class="container">
-    <!-- Hero -->
+
+    <!-- HERO SECTION (INTRODUCTION) -->
     <section class="hero">
+
+      <!-- Left content -->
       <div class="hero__content">
+
         <h1 class="hero__title">My IT Portfolio</h1>
+
         <p class="hero__subtitle">
-          This section contains my educational projects, assignments, and professional achievements.
-             The materials are organised by year and category, reflecting my growth as an IT specialist.
+          This website presents my academic work, learning evidence, and project outcomes.
+          The portfolio is organised to demonstrate my progress and competencies across my studies.
         </p>
 
+        <!-- Main action buttons -->
         <div class="hero__actions">
-          <a class="btn btn--primary" href="../portfolio.php">Register</a>
-          <a class="btn btn--secondary" href="register.php">Login</a>
+
+          <?php if (!empty($_SESSION['userName'])): ?>
+
+            <!-- If logged in → go directly to portfolio -->
+            <a class="btn btn--primary" href="portfolio.php">Go to Portfolio</a>
+
+          <?php else: ?>
+
+            <!-- If not logged in → show register/login -->
+            <a class="btn btn--primary" href="register.php">Register</a>
+            <a class="btn btn--secondary" href="login.php">Login</a>
+
+          <?php endif; ?>
+
         </div>
 
+        <!-- Quick personal facts -->
         <div class="hero__meta">
-          <div class="pill">Structure: Year → Categories → Files</div>
-          <div class="pill">Roles: Administrator & Visitor</div>
+          <div class="pill">Name: Oleksii Khomiak</div>
+          <div class="pill">Age: 18</div>
+          <div class="pill">Location: Kyiv, Ukraine</div>
+          <div class="pill">University: NHL Stenden</div>
         </div>
+
       </div>
 
-      <aside class="hero__panel" aria-label="Quick preview">
+      <!-- Right side information panel -->
+      <aside class="hero__panel" aria-label="Profile overview">
+
         <div class="panel__header">
-          <h2 class="panel__title">Quick preview</h2>
-          <span class="badge badge--info">Minimal UI</span>
+          <h2 class="panel__title">Profile overview</h2>
+          <span class="badge badge--info">Academic</span>
         </div>
 
+        <!-- Key information blocks -->
         <div class="panel__list">
+
           <div class="panel__item">
-            <div class="panel__k">Year 1</div>
-            <div class="panel__v">Web Development, Project Innovate…</div>
+            <div class="panel__k">Purpose</div>
+            <div class="panel__v">A curated archive of coursework and projects.</div>
           </div>
+
           <div class="panel__item">
-            <div class="panel__k">Year 2</div>
-            <div class="panel__v">Software Quality, Projects…</div>
+            <div class="panel__k">Structure</div>
+            <div class="panel__v">Year → Period → Category → Files.</div>
           </div>
+
           <div class="panel__item">
-            <div class="panel__k">Access</div>
-            <div class="panel__v">Per visitor, per file</div>
+            <div class="panel__k">Contact</div>
+            <div class="panel__v">
+              GitHub: OleksiiKhomiak<br>
+              Phone Number: +380 96 011 7377<br>
+              Email: khomiak2007@gmail.com
+            </div>
           </div>
+
         </div>
       </aside>
     </section>
 
-
-    <!-- Portfolio Structure -->
+    <!-- ===============================
+         ABOUT SECTION
+         =============================== -->
     <section class="section">
+
       <div class="section__head">
-        <h2 class="section__title">My Work & Projects</h2>
-        <p class="section__desc">Here you will find my academic and practical work, organised by year of study and subject area.</p>
+        <h2 class="section__title">About Me</h2>
+        <p class="section__desc">
+          Background information and the academic purpose of this portfolio.
+        </p>
       </div>
 
-      <!-- Year 1 -->
-      <article class="year">
-        <header class="year__head">
-          <h3 class="year__title">Year 1</h3>
-          <span class="muted">2 categories • 6 files</span>
-        </header>
+      <div class="grid">
 
-        <div class="grid">
-          <!-- Category Card -->
-          <div class="card">
-            <div class="card__head">
-              <h4 class="card__title">Web Development</h4>
-              <span class="badge badge--ok">Visible</span>
-            </div>
-            <p class="card__desc">Weekly evidence, assignments, wireframes, code snippets.</p>
+        <!-- Main about card -->
+        <article class="card">
 
-            <div class="filelist" aria-label="Files list">
-              <a class="file" href="#">
-                <div class="file__name">Week 3 Reflection (PDF)</div>
-                <div class="file__meta">Updated: 2026-03-01</div>
-              </a>
-              <a class="file" href="#">
-                <div class="file__name">Landing Page Wireframe (PDF)</div>
-                <div class="file__meta">Updated: 2026-02-20</div>
-              </a>
-              <a class="file" href="#">
-                <div class="file__name">HTML/CSS Practice (ZIP)</div>
-                <div class="file__meta">Updated: 2026-02-10</div>
-              </a>
-            </div>
-
-            <div class="card__actions">
-              <a class="btn btn--secondary btn--sm" href="#">Open category</a>
-              <a class="btn btn--ghost btn--sm" href="#">View all</a>
-            </div>
+          <div class="card__head">
+            <h4 class="card__title">Introduction</h4>
+            <span class="badge badge--ok">Student</span>
           </div>
 
-          <!-- Category Card -->
-          <div class="card">
-            <div class="card__head">
-              <h4 class="card__title">Project Innovate</h4>
-              <span class="badge badge--ok">Visible</span>
-            </div>
-            <p class="card__desc">Documentation, reports, presentations, progress evidence.</p>
+          <p class="card__desc">
+            My name is <strong>Oleksii Khomiak</strong>. I am an <strong>18-year-old</strong> student from
+            <strong>Kyiv, Ukraine</strong>, currently studying at
+            <strong>NHL Stenden University of Applied Sciences</strong>.
+          </p>
 
-            <div class="filelist" aria-label="Files list">
-              <a class="file" href="#">
-                <div class="file__name">Project Plan (PDF)</div>
-                <div class="file__meta">Updated: 2026-02-28</div>
-              </a>
-              <a class="file" href="#">
-                <div class="file__name">Sprint Review Slides (PDF)</div>
-                <div class="file__meta">Updated: 2026-02-14</div>
-              </a>
-              <a class="file" href="#">
-                <div class="file__name">Final Report (PDF)</div>
-                <div class="file__meta">Updated: 2026-01-30</div>
-              </a>
-            </div>
+          <p class="card__desc">
+            This website serves as my <strong>academic portfolio</strong>. It documents my progress through projects,
+            assignments, reports, and reflections, and provides evidence of my skills development over time.
+            Each file is organised by <strong>year, period, and category</strong> to make it easy to navigate and review.
+          </p>
 
-            <div class="card__actions">
-              <a class="btn btn--secondary btn--sm" href="#">Open category</a>
-              <a class="btn btn--ghost btn--sm" href="#">View all</a>
-            </div>
-          </div>
-        </div>
-      </article>
+          <p class="card__desc" style="margin-bottom:0;">
+            The portfolio is updated regularly and is intended for academic assessment, self-reflection,
+            and professional presentation of my learning outcomes.
+          </p>
 
-      <!-- Year 2 (preview) -->
-      <article class="year">
-        <header class="year__head">
-          <h3 class="year__title">Year 2</h3>
-          <span class="muted">Preview</span>
-        </header>
+        </article>
 
-        <div class="grid grid--preview">
-          <div class="card card--muted">
-            <div class="card__head">
-              <h4 class="card__title">Software Quality</h4>
-              <span class="badge badge--info">Coming</span>
-            </div>
-            <p class="card__desc">Testing, QA reports, code reviews, quality metrics.</p>
+        <!-- Skills / Work areas card -->
+        <aside class="card">
+
+          <div class="card__head">
+            <h4 class="card__title">Areas of Work</h4>
+            <span class="badge badge--info">IT</span>
           </div>
 
-          <div class="card card--muted">
-            <div class="card__head">
-              <h4 class="card__title">Projects</h4>
-              <span class="badge badge--info">Coming</span>
+          <p class="card__desc">
+            This portfolio includes various academic and practical projects demonstrating my skills
+            in software development, documentation, teamwork, and problem solving.
+          </p>
+
+          <!-- Highlight list -->
+          <div class="filelist" aria-label="Highlights list">
+
+            <div class="file">
+              <div>
+                <div class="file__name">Web Development</div>
+                <div class="file__meta">Frontend development, UI design, and web applications</div>
+              </div>
+              <div class="file__meta">Focus</div>
             </div>
-            <p class="card__desc">Team projects, deliverables, demos and documentation.</p>
+
+            <div class="file">
+              <div>
+                <div class="file__name">Project Development</div>
+                <div class="file__meta">Planning, implementation, and documentation of projects</div>
+              </div>
+              <div class="file__meta">Field</div>
+            </div>
+
+            <div class="file">
+              <div>
+                <div class="file__name">Analysis & Documentation</div>
+                <div class="file__meta">Technical documentation and analytical reports</div>
+              </div>
+              <div class="file__meta">Area</div>
+            </div>
+
           </div>
-        </div>
-      </article>
+
+          <!-- Quick action buttons -->
+          <div class="card__actions">
+
+            <a class="btn btn--secondary btn--sm" href="portfolio.php">Open Portfolio</a>
+
+            <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+              <a class="btn btn--ghost btn--sm" href="addFile.php">Upload File</a>
+            <?php endif; ?>
+
+          </div>
+
+        </aside>
+      </div>
     </section>
+
   </main>
 
+  <!-- ===============================
+       FOOTER
+       =============================== -->
   <footer class="footer">
-  <div class="container footer__inner">
 
-    <div class="footer__left">
-      <div class="footer__brand">
-        <span class="brand__mark"></span>
-        <span class="brand__text">Portfolio</span>
+    <div class="container footer__inner">
+
+      <div class="footer__left">
+        <div class="footer__brand">
+          <span class="brand__mark"></span>
+          <span class="brand__text">Portfolio</span>
+        </div>
+
+        <!-- Dynamic year -->
+        <p class="footer__copy">
+          © <?= date("Y"); ?> My Portfolio. All rights reserved.
+        </p>
       </div>
 
-      <p class="footer__copy">
-        © <?php echo date("Y"); ?> My Portfolio. All rights reserved.
-      </p>
-    </div>
-
-    <div class="footer__socials">
-
-      <a class="social" href="https://github.com/OleksiiKhomiak" target="_blank">
-        <span>GitHub</span>
-      </a>
-
-      <a class="social" href="https://t.me/dntxry" target="_blank">
-        <span>Telegram</span>
-      </a>
-
-      <a class="social" href="khomiak2007@gmail.com">
-        <span>Email</span>
-      </a>
+      <!-- Social links -->
+      <div class="footer__socials">
+        <a class="social" href="https://github.com/OleksiiKhomiak" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="social" href="https://t.me/dntxry" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a class="social" href="mailto:khomiak2007@gmail.com">Email</a>
+      </div>
 
     </div>
+  </footer>
 
-  </div>
-</footer>
+  <script>
+
+    /*
+      Username dropdown logic
+      - click username → open menu
+      - click outside → close menu
+    */
+
+    const btn = document.getElementById("userBtn");
+    const menu = document.getElementById("userDropdown");
+
+    if(btn && menu){
+
+      btn.addEventListener("click", () => {
+        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+      });
+
+      document.addEventListener("click", (e) => {
+        if(!btn.contains(e.target) && !menu.contains(e.target)){
+          menu.style.display = "none";
+        }
+      });
+
+    }
+
+  </script>
 
 </body>
 </html>

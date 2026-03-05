@@ -1,4 +1,3 @@
-
 :root{
   --bg1:#0b0f2a;
   --bg2:#000000;
@@ -33,7 +32,13 @@
 }
 
 *{ box-sizing:border-box; }
-html,body{ height:100%; }
+
+
+html, body{
+  /* Allow the page to grow with content (avoid fixed height issues) */
+  min-height: 100%;
+  height: auto;
+}
 
 body{
   margin:0;
@@ -43,16 +48,29 @@ body{
   font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
   color:var(--text);
 
-  display:block;
+  /*Key part: flex column so footer can stay at the bottom */
+  display:flex;
+  flex-direction:column;
+
   background: radial-gradient(circle at bottom, var(--bg1) 0%, var(--bg2) 70%);
   overflow-x:hidden;
   position:relative;
 }
 
-/* Stars layer */
+/* Main grows to fill free space so footer is pushed down */
+main{
+  flex: 1 0 auto;
+}
+
+/* Prevent footer from shrinking */
+footer{
+  flex-shrink: 0;
+}
+
+/* Stars layer (fixed so it does not get clipped on scroll/resize) */
 body::before{
   content:"";
-  position:absolute;
+  position:fixed;
   inset:0;
   background:
     radial-gradient(2px 2px at 20% 30%, white, transparent),
@@ -75,10 +93,10 @@ body::before{
   to{ transform: translateY(-1000px); }
 }
 
-/* subtle glow overlay */
+/* Subtle glow overlay layer (also fixed, behind content) */
 body::after{
   content:"";
-  position:absolute;
+  position:fixed;
   inset:-200px;
   background:
     radial-gradient(closest-side at 15% 20%, rgba(0,212,255,.18), transparent 65%),
@@ -88,12 +106,19 @@ body::after{
   pointer-events:none;
 }
 
+/* Container always above background layers */
 .container{
   max-width:var(--max);
   margin:0 auto;
   padding:0 18px;
   position:relative;
-  z-index:1; /* above stars */
+  z-index:1;
+}
+
+/* Make sure header/main/footer are always above stars/glow */
+header, main, footer{
+  position:relative;
+  z-index:1;
 }
 
 /* =======================
@@ -142,6 +167,15 @@ body::after{
   gap:12px;
 }
 
+.nav-user{
+  padding:8px 14px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(0,200,255,0.25);
+  color:var(--text);
+  font-weight:600;
+}
+
 .navlink{
   color:var(--muted);
   padding:8px 12px;
@@ -155,6 +189,51 @@ body::after{
   border-color:var(--border);
   background:rgba(255,255,255,0.04);
   box-shadow: 0 0 12px rgba(0, 200, 255, 0.20);
+}
+
+/* ===== User dropdown ===== */
+.user-menu{ position:relative; }
+
+.user-btn{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(0,200,255,0.3);
+  color:var(--text);
+  padding:6px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.2s;
+}
+
+.user-btn:hover{
+  border-color:rgba(0,200,255,0.6);
+  box-shadow:0 0 10px rgba(0,200,255,0.3);
+}
+
+.user-dropdown{
+  position:absolute;
+  right:0;
+  top:40px;
+
+  background:rgba(10,15,40,0.95);
+  border:1px solid rgba(0,200,255,0.2);
+  border-radius:12px;
+
+  padding:10px 0;
+  min-width:120px;
+
+  display:none;
+}
+
+.user-dropdown a{
+  display:block;
+  padding:8px 14px;
+  color:var(--text);
+  text-decoration:none;
+}
+
+.user-dropdown a:hover{
+  background:rgba(0,200,255,0.15);
 }
 
 /* =======================
@@ -267,7 +346,7 @@ body::after{
   backdrop-filter: blur(10px);
 }
 
-/* Right panel */
+/* Right panel block */
 .hero__panel{
   background: var(--glass);
   border:1px solid var(--border);
@@ -542,51 +621,8 @@ body::after{
 }
 
 /* =======================
-   Info cards
+   Footer ( only ONE version kept)
    ======================= */
-.infocard{
-  background: var(--glass);
-  border:1px solid var(--border);
-  border-radius: var(--radius);
-  padding:16px;
-  backdrop-filter: blur(16px);
-  box-shadow: var(--shadow-soft);
-}
-
-.infocard__title{
-  margin:0 0 8px;
-  font-size:15px;
-  font-weight:800;
-}
-
-.infocard__text{
-  margin:0;
-  color:var(--muted);
-  font-size:14px;
-}
-
-/* =======================
-   Footer
-   ======================= */
-.footer{
-  border-top:1px solid var(--border);
-  margin-top:18px;
-  padding:18px 0;
-  position:relative;
-  z-index:1;
-}
-
-.footer__inner{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-/* =========================
-   Footer
-   ========================= */
-
 .footer{
   margin-top:80px;
   border-top:1px solid rgba(0,200,255,0.15);
@@ -603,8 +639,6 @@ body::after{
   flex-wrap:wrap;
 }
 
-/* Left */
-
 .footer__brand{
   display:flex;
   align-items:center;
@@ -617,8 +651,6 @@ body::after{
   font-size:13px;
   color:var(--muted);
 }
-
-/* Social links */
 
 .footer__socials{
   display:flex;
@@ -644,31 +676,39 @@ body::after{
 }
 
 /* =======================
-   Responsive
+   Responsive rules
    ======================= */
 @media (max-width: 980px){
+  /* Switch hero to a single column */
   .hero{ grid-template-columns: 1fr; }
+
+  /* Simplify tools grid */
   .tools__row{ grid-template-columns: 1fr 1fr; }
+
+  /* Cards stack vertically */
   .grid{ grid-template-columns: 1fr; }
   .grid--3{ grid-template-columns: 1fr; }
 }
 
 @media (max-width: 520px){
+  /* Smaller hero title for phones */
   .hero__title{ font-size:34px; }
+
+  /* Let topbar wrap and breathe */
   .topbar__inner{ height:auto; padding:12px 0; }
   .topbar__nav{ flex-wrap:wrap; justify-content:flex-end; }
 }
 
 @media (max-width:700px){
-
+  /* Footer becomes a vertical block */
   .footer__inner{
     flex-direction:column;
     align-items:flex-start;
   }
 
+  /* Social links align to the left on small screens */
   .footer__socials{
     width:100%;
     justify-content:flex-start;
   }
-
 }
