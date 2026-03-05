@@ -21,8 +21,9 @@ $_SESSION['userName'] = "UserName";
       </a>
 
       <nav class="topbar__nav" aria-label="Top navigation">
-        <a class="navlink" href="#">Home</a>
-        <a class="navlink" href="register.php">Login</a>
+      <a class="navlink" href="home.php">Home</a>
+      <a class="navlink" href="portfolio.php">Portfolio</a>
+      <a class="navlink" href="addFile.php">Upload File</a>
       </nav>
     </div>
   </header>
@@ -39,7 +40,7 @@ $_SESSION['userName'] = "UserName";
 
         <div class="hero__actions">
           <a class="btn btn--primary" href="../portfolio.php">Register</a>
-          <a class="btn btn--secondary" href="../register.php">Login</a>
+          <a class="btn btn--secondary" href="register.php">Login</a>
         </div>
 
         <div class="hero__meta">
@@ -75,8 +76,8 @@ $_SESSION['userName'] = "UserName";
     <!-- Portfolio Structure -->
     <section class="section">
       <div class="section__head">
-        <h2 class="section__title">Portfolio structure</h2>
-        <p class="section__desc">Пример организации материалов по годам, категориям и файлам.</p>
+        <h2 class="section__title">My Work & Projects</h2>
+        <p class="section__desc">Here you will find my academic and practical work, organised by year of study and subject area.</p>
       </div>
 
       <!-- Year 1 -->
@@ -174,5 +175,39 @@ $_SESSION['userName'] = "UserName";
       </article>
     </section>
   </main>
+
+  <footer class="footer">
+  <div class="container footer__inner">
+
+    <div class="footer__left">
+      <div class="footer__brand">
+        <span class="brand__mark"></span>
+        <span class="brand__text">Portfolio</span>
+      </div>
+
+      <p class="footer__copy">
+        © <?php echo date("Y"); ?> My Portfolio. All rights reserved.
+      </p>
+    </div>
+
+    <div class="footer__socials">
+
+      <a class="social" href="https://github.com/OleksiiKhomiak" target="_blank">
+        <span>GitHub</span>
+      </a>
+
+      <a class="social" href="https://t.me/dntxry" target="_blank">
+        <span>Telegram</span>
+      </a>
+
+      <a class="social" href="khomiak2007@gmail.com">
+        <span>Email</span>
+      </a>
+
+    </div>
+
+  </div>
+</footer>
+
 </body>
 </html>
