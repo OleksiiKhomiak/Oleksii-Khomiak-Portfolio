@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,14 +23,14 @@
   </div>
 </header>
 
-<main class="container">
+<main class="container container--wide">
 
   <!-- Page header -->
   <section class="pagehead">
     <div class="pagehead__left">
-      <h1 class="pagehead__title">Upload file</h1>
+      <h1 class="pagehead__title">Upload File</h1>
       <p class="pagehead__subtitle">
-        Добавь файл в категорию и выбери, каким посетителям он будет доступен.
+        Add a file to a category. Optionally block access for a specific username.
       </p>
     </div>
     <div class="pagehead__right">
@@ -39,14 +39,16 @@
   </section>
 
   <section class="grid grid--upload">
-    <!-- Upload form -->
+
+    <!-- LEFT: Upload form -->
     <article class="card card--form">
       <header class="card__head">
-        <h2 class="card__title">File details</h2>
+        <h2 class="card__title">File Details</h2>
         <span class="badge badge--info">Admin</span>
       </header>
 
       <form class="form" action="#" method="post" enctype="multipart/form-data">
+
         <div class="field">
           <label class="label" for="title">Title</label>
           <input class="input" id="title" name="title" type="text" placeholder="e.g. Week 3 Reflection" required />
@@ -55,19 +57,16 @@
         <div class="field">
           <label class="label" for="desc">Description</label>
           <textarea class="textarea" id="desc" name="description" rows="4"
-            placeholder="Кратко опиши что это за файл, к какому проекту относится и что демонстрирует."></textarea>
+            placeholder="Briefly describe what this file is, which project it belongs to, and what it demonstrates."></textarea>
         </div>
 
         <div class="field">
-          <label class="label" for="file">Choose file</label>
+          <label class="label" for="file">Choose File</label>
 
-          <!-- Drag-drop визуально (работает и как обычный input) -->
           <label class="drop" for="file">
             <div class="drop__icon" aria-hidden="true">⬆</div>
-            <div class="drop__text">
-              <strong>Click to upload</strong> or drag & drop
-            </div>
-            <div class="drop__hint">PDF, images, office files (max size зависит от хостинга)</div>
+            <div class="drop__text"><strong>Click to upload</strong> or drag & drop</div>
+            <div class="drop__hint">PDF, images, office files (max size depends on hosting)</div>
           </label>
           <input class="fileinput" id="file" name="file" type="file" required />
         </div>
@@ -76,37 +75,21 @@
 
         <div class="field">
           <div class="field__head">
-            <label class="label">Allowed visitors</label>
-            <span class="muted small">Выбери, кто сможет просматривать этот файл</span>
+            <label class="label" for="blocked_user">Block access for username (optional)</label>
+            <span class="muted small">The user with this username will NOT be able to view the uploaded file.</span>
           </div>
 
-          <div class="checks">
-            <label class="check">
-              <input type="checkbox" name="visitors[]" value="1" />
-              <span class="check__box" aria-hidden="true"></span>
-              <span class="check__text">
-                <span class="check__name">Internship Supervisor</span>
-                <span class="check__meta">supervisor@example.com</span>
-              </span>
-            </label>
+          <input
+            class="input"
+            id="blocked_user"
+            name="blocked_user"
+            type="text"
+            placeholder="Enter username to block (e.g. john123)"
+            autocomplete="off"
+          />
 
-            <label class="check">
-              <input type="checkbox" name="visitors[]" value="2" />
-              <span class="check__box" aria-hidden="true"></span>
-              <span class="check__text">
-                <span class="check__name">SLB Staff</span>
-                <span class="check__meta">slb@example.com</span>
-              </span>
-            </label>
-
-            <label class="check">
-              <input type="checkbox" name="visitors[]" value="3" />
-              <span class="check__box" aria-hidden="true"></span>
-              <span class="check__text">
-                <span class="check__name">Classmate</span>
-                <span class="check__meta">classmate@example.com</span>
-              </span>
-            </label>
+          <div class="note note--compact">
+            <strong>Note:</strong> This restriction must be checked on the server (PHP) when a user opens the file.
           </div>
         </div>
 
@@ -114,45 +97,65 @@
           <button class="btn btn--primary" type="submit">Upload</button>
           <a class="btn btn--secondary" href="portfolio.php">Cancel</a>
         </div>
+
       </form>
     </article>
 
-    <!-- Help / rules -->
-    <aside class="card card--side">
-      <h2 class="card__title">Tips</h2>
+    <!-- RIGHT: Upload rules -->
+    <aside class="card card--rules">
+      <header class="rules__head">
+        <h2 class="card__title">Upload Rules</h2>
+      </header>
+
       <p class="card__desc">
-        Для соблюдения требований лучше загружать отчёты и рефлексии в PDF — так файл можно просматривать прямо в браузере.
+        Follow these rules to keep your portfolio clean, readable, and compliant with requirements.
       </p>
 
-      <div class="side__list">
-        <div class="side__item">
-          <div class="side__k">Access</div>
-          <div class="side__v">Доступ задаётся для каждого файла и каждого visitor отдельно.</div>
+      <div class="rules__list">
+        <div class="rule">
+          <div class="rule__k">1) Clear titles</div>
+          <div class="rule__v">Use meaningful names (e.g. “Year1 - WebDev - Reflection Week 3”).</div>
         </div>
-        <div class="side__item">
-          <div class="side__k">Privacy</div>
-          <div class="side__v">Не делись личными данными в публичных файлах.</div>
+
+        <div class="rule">
+          <div class="rule__k">2) PDF preferred</div>
+          <div class="rule__v">Upload reports/reflections as PDF so they can be previewed in the browser.</div>
         </div>
-        <div class="side__item">
-          <div class="side__k">Preview</div>
-          <div class="side__v">PDF и изображения обычно отображаются без скачивания.</div>
+
+        <div class="rule">
+          <div class="rule__k">3) Short description</div>
+          <div class="rule__v">Write what the file is, what you did, and what you learned.</div>
+        </div>
+
+        <div class="rule">
+          <div class="rule__k">4) Privacy</div>
+          <div class="rule__v">Do not upload passwords, phone numbers, addresses, or other personal data.</div>
+        </div>
+
+        <div class="rule">
+          <div class="rule__k">5) Access control</div>
+          <div class="rule__v">If you block a username, enforce it in PHP when serving the file.</div>
         </div>
       </div>
 
       <div class="note">
-        <strong>Note:</strong> Реальную проверку доступа нужно делать на сервере (PHP), не только в интерфейсе.
+        <strong>Reminder:</strong> Validate file type and size on the server (PHP) before saving.
       </div>
     </aside>
+
   </section>
 
 </main>
 
 <script>
-  // мини-удобство: показываем имя выбранного файла (можно убрать)
+  // show selected file name
   const file = document.getElementById('file');
   const drop = document.querySelector('.drop__text');
+
   file?.addEventListener('change', () => {
-    if (file.files && file.files[0]) drop.innerHTML = `<strong>${file.files[0].name}</strong>`;
+    if (file.files && file.files[0]) {
+      drop.innerHTML = `<strong>${file.files[0].name}</strong>`;
+    }
   });
 </script>
 
