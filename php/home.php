@@ -276,7 +276,7 @@ session_start();
       <!-- Social links -->
       <div class="footer__socials">
         <a class="social" href="https://github.com/OleksiiKhomiak" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a class="social" href="https://t.me/dntxry" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a class="social" href="https://www.instagram.com/lexa_1_1/" target="_blank" rel="noopener noreferrer">Instagram</a>
         <a class="social" href="mailto:khomiak2007@gmail.com">Email</a>
       </div>
 
